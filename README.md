@@ -48,11 +48,8 @@
 五、项目结构
 
     AVL_Tree/
-    
     ├── AVL.hpp            # AVL树实现（模板类）
-    
     ├── main.cpp           # 测试程序
-    
     └── Visual Studio项目文件
     
 此AVL树实现确保所有操作后树保持平衡，查询效率稳定在O(log n)。
