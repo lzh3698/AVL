@@ -20,29 +20,35 @@ public:
 			});
 	}
 
+	// 插入
 	void insert(const T& val) {
 		root = insert(root, val);
 	}
 
+	// 删除
 	void remove(const T& val) {
 		root = remove(root, val);
 	}
 
+	// 前序遍历
 	void pre_order() const {
 		preorder(root);
 		std::cout << std::endl;
 	}
 
+	// 中序遍历
 	void in_order() const {
 		inorder(root);
 		std::cout << std::endl;
 	}
 
+	// 后序遍历
 	void post_order() const {
 		postorder(root);
 		std::cout << std::endl;
 	}
 
+	// 层序遍历
 	void level_order() const {
 		level_order([](Node *node) {
 			cout << node->val << " ";
@@ -50,10 +56,12 @@ public:
 		std::cout << std::endl;
 	}
 
+	// 查找元素
 	bool find(const T& val) const {
 		return find(root, val);
 	}
 
+	// 获取最大元素
 	const T& max() const {
 		if (root) {
 			Node* pre = root;
@@ -67,6 +75,7 @@ public:
 		throw runtime_error("No element!");
 	}
 
+	// 获取最小元素
 	const T& min() const {
 		if (root) {
 			Node* pre = root;
@@ -78,22 +87,6 @@ public:
 			return pre->val;
 		}
 		throw runtime_error("No element!");
-	}
-
-
-	bool find(Node* node, const T& val) const {
-		if (!node) {
-			return false;
-		}
-		if (node->val < val) {
-			return find(node->right, val);
-		}
-		else if (node->val > val) {
-			return find(node->left, val);
-		}
-		else {
-			return true;
-		}
 	}
 
 private:
@@ -113,6 +106,21 @@ private:
 
 	Node* root;
 
+	// 递归查找
+	bool find(Node* node, const T& val) const {
+		if (!node) {
+			return false;
+		}
+		if (node->val < val) {
+			return find(node->right, val);
+		}
+		else if (node->val > val) {
+			return find(node->left, val);
+		}
+		else {
+			return true;
+		}
+	}
 
 	void preorder(Node* node) const {
 		if (!node) {
@@ -173,8 +181,10 @@ private:
 			return node;
 		}
 
+		// 更新节点信息
 		node->height = std::max(height(node->left), height(node->right)) + 1;
 
+		// 插入之后不平衡，调整
 		if (std::abs(height(node->left) - height(node->right)) > 1) {
 			return adjust(node);
 		}
@@ -193,7 +203,7 @@ private:
 			node->left = remove(node->left, val);
 		}
 		else {
-			//��ǰ�����
+			//找前驱结点
 			if (node->left && node->right) {
 				Node* cur = node->left;
 				Node* parent = node;
@@ -206,6 +216,7 @@ private:
 			}
 			else
 			{
+				// 只有一个孩子节点，直接替换
 				if (node->left) {
 					Node* tmp = node->left;
 					delete node;
@@ -219,6 +230,7 @@ private:
 			}
 		}
 
+		// 更新节点信息
 		node->height = std::max(height(node->left), height(node->right)) + 1;
 		if (std::abs(height(node->left) - height(node->right)) > 1) {
 			return adjust(node);
@@ -226,6 +238,7 @@ private:
 		return node;
 	}
 
+	// 左旋
 	Node* left_rotate(Node* node)
 	{
 		Node* child = node->right;
@@ -236,6 +249,7 @@ private:
 		return child;
 	}
 
+	// 右旋
 	Node* right_rotate(Node* node)
 	{
 		Node* child = node->left;
@@ -246,18 +260,21 @@ private:
 		return child;
 	}
 
+	// 右平衡
 	Node* right_balance(Node* node)
 	{
 		node->right = right_rotate(node->right);
 		return left_rotate(node);
 	}
 
+	// 左平衡
 	Node* left_balance(Node* node)
 	{
 		node->left = left_rotate(node->left);
 		return right_rotate(node);
 	}
 
+	// 不平衡的调整函数
 	Node* adjust(Node* node) {
 		if (height(node->left) > height(node->right)) {
 			Node* child = node->left;
@@ -279,6 +296,7 @@ private:
 		}
 	}
 
+	// 返回高度
 	int height(Node* node) const {
 		if (!node) {
 			return 0;
