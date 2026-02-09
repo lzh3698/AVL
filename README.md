@@ -29,10 +29,13 @@
 
 ## 项目结构
     AVL/  
-    ├── AVL.hpp            // AVL树实现
-    ├── main.cpp           // 测试程序
-    ├── AVL.vcxproj
-    ├── AVL.vcxproj.filters
-    └── Visual Studio项目文件
+    ├── AVL.sln                # 解决方案文件
+    ├── .gitignore             # 忽视文件
+    ├── README.md
+    └── AVL/  
+        ├── AVL.hpp            # AVL树实现
+        ├── main.cpp           # 测试程序
+        ├── AVL.vcxproj        #项目文件
+        └── AVL.vcxproj.filters    # 项目过滤器文件
     
 此AVL树实现确保所有操作后树保持平衡，查询效率稳定在O(log n)。
